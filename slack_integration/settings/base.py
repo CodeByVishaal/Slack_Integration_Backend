@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'usermanagement',
+    'programs',
+    'submissions',
     'rest_framework',
     'corsheaders',
     'drf_yasg',
@@ -102,6 +104,9 @@ DATABASES = {
         'PORT': config('DATABASE_PORT'),
     }
 }
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
