@@ -4,3 +4,4 @@ venv
 requests.log
 migrations
 .env
+media

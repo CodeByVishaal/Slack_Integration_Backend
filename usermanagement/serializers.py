@@ -61,6 +61,7 @@ class LoginSerializer(serializers.Serializer):
     password = serializers.CharField(min_length=5, style={'input_type':'password'}, write_only=True)
     username = serializers.CharField(read_only=True)
     is_superuser = serializers.BooleanField(read_only=True)
+    role = serializers.CharField(read_only=True)
     access_token = serializers.CharField(read_only=True)
     refresh_token = serializers.CharField(read_only=True)
 
@@ -97,6 +98,7 @@ class LoginSerializer(serializers.Serializer):
             'username': user.username,
             'email': user.email,
             'is_superuser': user.is_superuser,
+            'role': user.role,
             'access_token': str(user_token.get('access_token')),
             'refresh_token':str(user_token.get('refresh_token')),
             }
