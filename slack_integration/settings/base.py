@@ -67,6 +67,8 @@ CORS_ALLOW_HEADERS = [
     'Authorization',
 ]
 
+SLACK_WEBHOOK_URL = config('SLACK_WEBHOOK_URL')
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
