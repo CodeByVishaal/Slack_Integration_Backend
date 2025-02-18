@@ -1,12 +1,17 @@
 import requests
 
-from django.conf import settings
+def send_slack_notification(user, message):
+    if not user.slack_access_token:
+        return
 
-def send_slack_notification(message):
-    webhook_url = settings.SLACK_WEBHOOK_URL  # Ensure this is in your settings.py
-    payload = {"text": message}
-    headers = {"Content-Type": "application/json"}
-
-    response = requests.post(webhook_url, json=payload, headers=headers)
-
-    return response.status_code == 200
+    url = "https://slack.com/api/chat.postMessage"
+    headers = {
+        "Authorization": f"Bearer {user.slack_access_token}",
+        "Content-Type": "application/json",
+    }
+    data = {
+        "channel": user.slack_channel_id or user.slack_user_id,  # Send to user if no channel selected
+        "text": message,
+    }
+    response = requests.post(url, json=data, headers=headers)
+    return response.json()

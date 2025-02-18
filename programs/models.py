@@ -1,4 +1,5 @@
 from django.db import models
+from usermanagement.models import User
 import uuid
 
 # Create your models here.
@@ -15,6 +16,7 @@ class Program(models.Model):
         ('closed', 'Closed'),
     ]
     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='programs', null=True)
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     severity = models.CharField(max_length=6, choices=SERVERITY_CHOICES)
