@@ -13,5 +13,6 @@ def send_slack_notification(user, message):
         "channel": user.slack_channel_id or user.slack_user_id,  # Send to user if no channel selected
         "text": message,
     }
+    print(user.slack_channel_id)
     response = requests.post(url, json=data, headers=headers)
     return response.json()

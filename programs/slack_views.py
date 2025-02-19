@@ -21,7 +21,7 @@ def slack_auth(request):
 
     slack_url = (
         f"https://slack.com/oauth/v2/authorize?client_id={settings.SLACK_CLIENT_ID}"
-        f"&scope=channels:read,channels:manage,chat:write,users:write,users:read,commands,incoming-webhook,im:read"
+        f"&scope=channels:read,channels:manage,chat:write,users:write,users:read,commands,incoming-webhook"
         f"&user_scope=users:read,chat:write,channels:write.invites,groups:write.invites"
         f"&redirect_uri={settings.SLACK_REDIRECT_URI}"
         f"&bot_scope=channels:read"
@@ -95,7 +95,7 @@ def save_slack_channel(request):
 
 @api_view(['GET'])
 def slack_api(request):
-    slack_code = '8442511989926.8475428675041.354d7110b6d14c7b5bf60d8c74d0e6670ca0117cc2e1fd76e164bf816b459d19'
+    slack_code = '8442511989926.8472239734629.1bacdd126ec19f12d51f10943faefa55dbf8d000a7c3ff1e10cfa50bcb04eaa1'
 
     print(slack_code)
     response = requests.post("https://slack.com/api/oauth.v2.access", data={
@@ -113,11 +113,13 @@ def slack_api(request):
     access_token = response["access_token"]
     slack_user_id = response["authed_user"]["id"]
     slack_team_id = response["team"]["id"]
+    slack_channel_id = response["incoming_webhook"]['channel_id']
 
     user = request.user
     user.slack_access_token = access_token
     user.slack_user_id = slack_user_id
     user.slack_team_id = slack_team_id  # Store Slack team ID if needed
+    user.slack_channel_id = slack_channel_id
     user.save()
 
     return Response({"message": "Slack integration successful", "Slack_user": slack_user_id})
