@@ -10,7 +10,7 @@ def send_slack_notification(user, message):
         "Content-Type": "application/json",
     }
     data = {
-        "channel": user.slack_channel_id or user.slack_user_id,  # Send to user if no channel selected
+        "channel": user.slack_user_id,  # Send to user if no channel selected
         "text": message,
     }
     print(user.slack_channel_id)
