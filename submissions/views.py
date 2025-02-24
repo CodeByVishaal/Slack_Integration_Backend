@@ -15,13 +15,15 @@ class SubmissionListView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
 
+        user = self.request.user
+
         if self.request.user.role != 'researcher':
             raise PermissionDenied("You are not authorized to create Submission")
 
         submission = serializer.save()
 
         program_owner = submission.program.user
-        message = f"📢 *New Submission Created!* \n🔹 *Title:* {submission.title}\n🔹 *Severity:* {submission.severity}\n🔹 *Status:* {submission.status}"
+        message = f"📢 *{user.first_name} {user.last_name} Created a New Submission !* \n🔹 *Title:* {submission.title}\n🔹 *Severity:* {submission.severity}\n🔹 *Status:* {submission.status}"
         send_slack_notification(program_owner, message)
 
 

@@ -22,7 +22,7 @@ class ProgramListView(generics.ListCreateAPIView):
         updated_instance = serializer.save(user=user)  # Save the updated data
         user = self.request.user
         # Create a Slack notification message
-        message = f"🔔 *Program Created!*\n" \
+        message = f"🔔 *{user.first_name} {user.last_name} Created a Program!*\n" \
                   f"📌 *Title:* {updated_instance.title}\n" \
                   f"📄 *Description:* {updated_instance.description}\n" \
                   f"⚠️ *Severity:* {updated_instance.severity}\n" \
@@ -58,7 +58,7 @@ class ProgramUpdateView(generics.RetrieveUpdateDestroyAPIView):
 
             print(updated_fields)
             if updated_fields:
-                message = f"🔔 *Program Updated: {instance.title}* 🔔\n"
+                message = f"🔔 *{instance.user.first_name} {instance.user.last_name} Updated: {instance.title}* 🔔\n"
                 for field, changes in updated_fields.items():
                     message += f"📝 *{field.capitalize()}*: `{changes['old']}` ➡ `{changes['new']}`\n"
 

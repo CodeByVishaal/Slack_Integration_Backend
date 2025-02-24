@@ -24,7 +24,6 @@ def slack_auth(request):
         f"&scope=channels:read,channels:manage,chat:write,users:write,users:read,commands,incoming-webhook"
         f"&user_scope=users:read,chat:write,channels:write.invites,groups:write.invites"
         f"&redirect_uri={settings.SLACK_REDIRECT_URI}"
-        f"&bot_scope=channels:read"
     )
     return redirect(slack_url)
 
@@ -95,7 +94,7 @@ def save_slack_channel(request):
 
 @api_view(['GET'])
 def slack_api(request):
-    slack_code = '8442511989926.8472239734629.1bacdd126ec19f12d51f10943faefa55dbf8d000a7c3ff1e10cfa50bcb04eaa1'
+    slack_code = '8442511989926.8488350332435.e2c7eb4144c3209d12d56dfb8a7f4f92ca9e9880a2127f646588ae56edf96539'
 
     print(slack_code)
     response = requests.post("https://slack.com/api/oauth.v2.access", data={
